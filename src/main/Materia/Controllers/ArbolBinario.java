@@ -45,9 +45,10 @@ public class ArbolBinario {
     }
 
     public void printTreeNode2(Node root, String prefix, boolean isLeft) {
+
     }
 
     public Node getRoot() {
-        return null;
+    return root;
     }
 }
