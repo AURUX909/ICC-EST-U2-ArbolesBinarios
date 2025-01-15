@@ -44,6 +44,25 @@ public class ArbolBinario {
         }
     }
 
+    public void printTree2(Node node, String prefix, boolean isLeft) {
+        if (node != null) {
+            System.out.println(prefix + (isLeft ? "├──" : "└──") + node.getValue());
+            if (node.getLeft() != null || node.getRight() != null) {
+                if (node.getLeft() != null) {
+                    printTree(node.getLeft(), prefix + (isLeft ? "│  " : "   "), true);
+                } else {
+                    System.out.println(prefix + (isLeft ? "│  " : "   ") + "├── null");
+                }
+    
+                if (node.getRight() != null) {
+                    printTree(node.getRight(), prefix + (isLeft ? "│  " : "   "), false);
+                } else {
+                    System.out.println(prefix + (isLeft ? "│  " : "   ") + "└── null");
+                }
+            }
+        }
+    }
+
     public void printTreeNode2(Node root, String prefix, boolean isLeft) {
 
     }

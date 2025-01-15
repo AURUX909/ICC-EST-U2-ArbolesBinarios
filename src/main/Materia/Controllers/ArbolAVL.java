@@ -10,8 +10,10 @@ public class ArbolAVL {
         root = insert(root, value);
         System.out.println("Nodo insertado " + value + ", Balance: " + getBalance(root));
         System.out.println("───────");
-        printTree();
+        // Solo imprimir al final, después de la inserción y las rotaciones
+        printTree();  
     }
+    
 
     private Node insert(Node node, int value) {
         if (node == null) {
@@ -72,26 +74,23 @@ public class ArbolAVL {
     private Node rigthRotate(Node y) {
         Node x = y.getLeft();
         Node temp = x.getRight();
-        System.out.println("Rotacion Derecha en nodo: " + y.getValue() + ", Balance " + getBalance(y));
         x.setRight(y);
         y.setLeft(temp);
         y.setHeight(Math.max(height(y.getLeft()), height(y.getRight())) + 1);
         x.setHeight(Math.max(height(x.getLeft()), height(x.getRight())) + 1);
-        System.out.println("Nueva Raiz despues de rotacion derecha: " + x.getValue());
         return x;
     }
-
+    
     private Node leftRotate(Node x) {
         Node y = x.getRight();
         Node temp = y.getLeft();
-        System.out.println("Rotacion Izquierda en nodo: " + x.getValue() + ", Balance " + getBalance(x));
         y.setLeft(x);
         x.setRight(temp);
         x.setHeight(Math.max(height(x.getLeft()), height(x.getRight())) + 1);
         y.setHeight(Math.max(height(y.getLeft()), height(y.getRight())) + 1);
-        System.out.println("Nueva raiz despues de rotacion izquierda: " + y.getValue());
         return y;
     }
+    
 
     private int height(Node node) {
         if (node == null) {
