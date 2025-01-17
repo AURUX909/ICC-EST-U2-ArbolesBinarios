@@ -7,7 +7,9 @@ import main.Ejercicio_04_depth.Depth;
 import main.Materia.Controllers.ArbolAVL;
 import main.Materia.Controllers.ArbolBinario;
 import main.Materia.Controllers.ArbolRecorrido;
+import main.Materia.Controllers.Graph;
 import main.Materia.Modelo.Node;
+import main.Materia.Modelo.NodeG;
 
 public class App {
     private static ArbolBinario arbolBinario;
@@ -15,35 +17,40 @@ public class App {
     private static final int[] VALORES = { 40, 20, 60, 10, 30, 50, 70, 5, 15, 55 };
 
     public static void main(String[] args) {
-        System.out.println("=== EJERCICIO 1: Insertar en BST ===");
-        runEjercicio1();
+        System.out.println("==GRAPH==");
+        runGraph();
 
-        System.out.println("\n=== EJERCICIO 2: Invertir Árbol Binario ===");
-        runEjercicio2();
-
-        System.out.println("\n=== EJERCICIO 3: Listar por Niveles ===");
-        runEjercicio3();
-
-        System.out.println("\n=== EJERCICIO 4: Calcular Profundidad ===");
-        runEjercicio4();
-
-        inicializarArboles();
-        runArbolAvl();
-
-        System.out.println("\nÁrbol Binario:");
-        arbolBinario.printTree();
-
-        System.out.println("\nPreorden Iterativo:");
-        arbolRecorrido.preorderIterativo(arbolBinario.getRoot());
-
-        System.out.println("\nPreorden Recursivo:");
-        arbolRecorrido.preOrderRecursivo(arbolBinario.getRoot());
-
-        System.out.println("\nPostorden:");
-        arbolRecorrido.posOrderRecursivo(arbolBinario.getRoot());
-
-        System.out.println("\nInorden:");
-        arbolRecorrido.InOrderRecursivo(arbolBinario.getRoot());
+        /*
+         * System.out.println("=== EJERCICIO 1: Insertar en BST ===");
+         * runEjercicio1();
+         * 
+         * System.out.println("\n=== EJERCICIO 2: Invertir Árbol Binario ===");
+         * runEjercicio2();
+         * 
+         * System.out.println("\n=== EJERCICIO 3: Listar por Niveles ===");
+         * runEjercicio3();
+         * 
+         * System.out.println("\n=== EJERCICIO 4: Calcular Profundidad ===");
+         * runEjercicio4();
+         * 
+         * inicializarArboles();
+         * runArbolAvl();
+         * 
+         * System.out.println("\nÁrbol Binario:");
+         * arbolBinario.printTree();
+         * 
+         * System.out.println("\nPreorden Iterativo:");
+         * arbolRecorrido.preorderIterativo(arbolBinario.getRoot());
+         * 
+         * System.out.println("\nPreorden Recursivo:");
+         * arbolRecorrido.preOrderRecursivo(arbolBinario.getRoot());
+         * 
+         * System.out.println("\nPostorden:");
+         * arbolRecorrido.posOrderRecursivo(arbolBinario.getRoot());
+         * 
+         * System.out.println("\nInorden:");
+         * arbolRecorrido.InOrderRecursivo(arbolBinario.getRoot());
+         */
     }
 
     private static void runArbolAvl() {
@@ -88,37 +95,36 @@ public class App {
             System.out.println();
         }
     }
-    
 
     private static void runEjercicio1() {
         ArbolBinario arbol = new ArbolBinario();
-        int[] valores = {5, 3, 7, 2, 4, 6, 8};
-        
+        int[] valores = { 5, 3, 7, 2, 4, 6, 8 };
+
         for (int valor : valores) {
             arbol.insert(valor);
         }
-        
+
         System.out.println("Arbol BST resultante:");
         arbol.printTree();
     }
-    
+
     private static void runEjercicio2() {
         ArbolBinario arbol = new ArbolBinario();
-        int[] valores = {4, 2, 7, 1, 3, 6, 9};
-        
+        int[] valores = { 4, 2, 7, 1, 3, 6, 9 };
+
         for (int valor : valores) {
             arbol.insert(valor);
         }
-        
+
         System.out.println("Arbol original:");
         arbol.printTree();
-        
+
         InvertBinaryTree inversor = new InvertBinaryTree();
         Node invertido = inversor.invertTree(arbol.getRoot());
-        
+
         System.out.println("\nArbol invertido:");
         arbol.printTree2(invertido, "", true);
-        
+
         System.out.println("\nFormato niveles del arbol invertido:");
         List<List<Node>> niveles = new ListLevels().listLevels(invertido);
         for (List<Node> nivel : niveles) {
@@ -134,18 +140,18 @@ public class App {
 
     private static void runEjercicio4() {
         ArbolBinario arbol = new ArbolBinario();
-        int[] valores = {4, 2, 7, 1, 3, 6, 9}; 
-        
+        int[] valores = { 4, 2, 7, 1, 3, 6, 9 };
+
         for (int valor : valores) {
             arbol.insert(valor);
         }
-        
+
         System.out.println("Arbol para calcular profundidad:");
         arbol.printTree();
-        
+
         Depth profundidad = new Depth();
         int maxDepth = profundidad.maxDepth(arbol.getRoot());
-        
+
         System.out.println("\nFormato niveles:");
         List<List<Node>> niveles = new ListLevels().listLevels(arbol.getRoot());
         for (List<Node> nivel : niveles) {
@@ -157,7 +163,7 @@ public class App {
             }
             System.out.println();
         }
-        
+
         System.out.println("\nProfundidad maxima: " + maxDepth);
     }
 
@@ -198,5 +204,26 @@ public class App {
             }
             System.out.println(" ]");
         }
+    }
+
+    private static void runGraph() {
+        Graph grafo = new Graph();
+
+        NodeG node5 = grafo.addNode(5);
+        NodeG node7 = grafo.addNode(7);
+        NodeG node9 = grafo.addNode(9);
+        NodeG node11 = grafo.addNode(11);
+        NodeG node3 = grafo.addNode(3);
+
+        // Connections based on the image
+        grafo.addEdge(node5, node7);
+        grafo.addEdge(node5, node3);
+        grafo.addEdge(node5, node9);
+        grafo.addEdge(node7, node9);
+        grafo.addEdge(node3, node11);
+        grafo.addEdge(node3, node9);
+
+        System.out.println("Graph with all connections:");
+        grafo.printGraph();
     }
 }
