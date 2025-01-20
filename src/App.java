@@ -207,23 +207,94 @@ public class App {
     }
 
     private static void runGraph() {
-        Graph grafo = new Graph();
-
-        NodeG node5 = grafo.addNode(5);
-        NodeG node7 = grafo.addNode(7);
-        NodeG node9 = grafo.addNode(9);
-        NodeG node11 = grafo.addNode(11);
-        NodeG node3 = grafo.addNode(3);
-
-        // Connections based on the image
-        grafo.addEdge(node5, node7);
-        grafo.addEdge(node5, node3);
-        grafo.addEdge(node5, node9);
-        grafo.addEdge(node7, node9);
-        grafo.addEdge(node3, node11);
-        grafo.addEdge(node3, node9);
-
-        System.out.println("Graph with all connections:");
-        grafo.printGraph();
-    }
+        // [Previous grafoNoDirigido code remains exactly the same]
+        Graph grafoNoDirigido = new Graph();
+        
+        NodeG node5 = grafoNoDirigido.addNode(5);
+        NodeG node7 = grafoNoDirigido.addNode(7);
+        NodeG node9 = grafoNoDirigido.addNode(9);
+        NodeG node11 = grafoNoDirigido.addNode(11);
+        NodeG node3 = grafoNoDirigido.addNode(3);
+        
+        grafoNoDirigido.addEdge(node5, node7);
+        grafoNoDirigido.addEdge(node5, node3);
+        grafoNoDirigido.addEdge(node5, node9);
+        grafoNoDirigido.addEdge(node7, node9);
+        grafoNoDirigido.addEdge(node3, node11);
+        grafoNoDirigido.addEdge(node3, node9);
+        
+        System.out.println("Grafo No Dirigido:");
+        grafoNoDirigido.printGraph();
+        grafoNoDirigido.getBFS(node5);
+        grafoNoDirigido.getDFS(node5);
+        
+        // [Previous grafoDirigido code remains exactly the same]
+        Graph grafoDirigido = new Graph();
+        
+        NodeG node0 = grafoDirigido.addNode(0);
+        NodeG node1 = grafoDirigido.addNode(1);
+        NodeG node2 = grafoDirigido.addNode(2);
+        NodeG node3Dirigido = grafoDirigido.addNode(3);
+        NodeG node4 = grafoDirigido.addNode(4);
+        NodeG node5Dirigido = grafoDirigido.addNode(5);
+        
+        grafoDirigido.addEdgeUmi(node0, node3Dirigido);
+        grafoDirigido.addEdgeUmi(node0, node5Dirigido);
+        grafoDirigido.addEdgeUmi(node1, node0);
+        grafoDirigido.addEdgeUmi(node2, node1);
+        grafoDirigido.addEdgeUmi(node3Dirigido, node2);
+        grafoDirigido.addEdgeUmi(node3Dirigido, node4);
+        grafoDirigido.addEdgeUmi(node4, node1);
+        
+        System.out.println("\nGrafo Dirigido:");
+        grafoDirigido.printGraph();
+        System.out.println("\nDIRECCIONAL");
+        grafoDirigido.getDFS(node0);
+        grafoDirigido.getBFS(node0);
+        
+        // [Previous no direccional code remains the same]
+        grafoDirigido.addEdge(node0, node3Dirigido);
+        grafoDirigido.addEdge(node0, node5Dirigido);
+        grafoDirigido.addEdge(node1, node0);
+        grafoDirigido.addEdge(node2, node1);
+        grafoDirigido.addEdge(node3Dirigido, node2);
+        grafoDirigido.addEdge(node3Dirigido, node4);
+        grafoDirigido.addEdge(node4, node1);
+        
+        System.out.println("\nNO DIRECCIONAL");
+        grafoDirigido.getDFS(node0);
+        grafoDirigido.getBFS(node0);
+        
+        // New graph implementation from the image
+        Graph nuevoGrafo = new Graph();
+        
+        // Create nodes 0-9
+        NodeG[] nodes = new NodeG[10];
+        for (int i = 0; i < 10; i++) {
+            nodes[i] = nuevoGrafo.addNode(i);
+        }
+        
+        // Add directed edges according to the image
+        nuevoGrafo.addEdgeUmi(nodes[0], nodes[1]);
+        nuevoGrafo.addEdgeUmi(nodes[0], nodes[3]);
+        nuevoGrafo.addEdgeUmi(nodes[0], nodes[5]);
+        nuevoGrafo.addEdgeUmi(nodes[1], nodes[2]);
+        nuevoGrafo.addEdgeUmi(nodes[1], nodes[4]);
+        nuevoGrafo.addEdgeUmi(nodes[1], nodes[8]);
+        nuevoGrafo.addEdgeUmi(nodes[2], nodes[3]);
+        nuevoGrafo.addEdgeUmi(nodes[3], nodes[4]);
+        nuevoGrafo.addEdgeUmi(nodes[3], nodes[7]);
+        nuevoGrafo.addEdgeUmi(nodes[3], nodes[9]);
+        nuevoGrafo.addEdgeUmi(nodes[7], nodes[3]);
+        nuevoGrafo.addEdgeUmi(nodes[7], nodes[8]);
+        
+        System.out.println("\nNuevo Grafo Dirigido:");
+        nuevoGrafo.printGraph();
+        
+        System.out.println("DFS desde el nodo 0:");
+        nuevoGrafo.getDFS(nodes[0]);
+        
+        System.out.println("DFS desde el nodo 0 hasta el nodo 7: " + 
+            nuevoGrafo.hasPathDFS(nodes[0], nodes[7]));
+    }   
 }

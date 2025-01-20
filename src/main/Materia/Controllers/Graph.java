@@ -1,12 +1,15 @@
 package main.Materia.Controllers;
 
-import main.Materia.Modelo.NodeG;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Set;
+import main.Materia.Modelo.NodeG;
 
 public class Graph {
     private List<NodeG> nodes;
-
     public Graph() {
         this.nodes = new ArrayList<>();
     }
@@ -34,7 +37,98 @@ public class Graph {
         }
     }
 
-    public void getDFS(NodeG startNode) {
+    public void addEdgeUmi(NodeG src, NodeG dest) {
+        src.addNeighbor(dest);  
+    }
+
+    public void getDFS(NodeG start) {
+        if (start == null) return;
+        
+        Set<NodeG> visitados = new HashSet<>();
+        System.out.println("DFS desde el nodo " + start.getValue() + ":");
+        getDFSutil(start, visitados);
+        System.out.println();
+    }
+    
+    private void getDFSutil(NodeG node, Set<NodeG> visitados) {
+        if (node == null || visitados.contains(node)) {
+            return;
+        }
+        visitados.add(node);
+        System.out.print(node.getValue() + " ");
+        for (NodeG neighbor : node.getNeighbors()) {
+            getDFSutil(neighbor, visitados);
+        }
+    }
+
+    public void getBFS(NodeG start) {
+        Set<NodeG> visitados = new HashSet<>();
+        Queue<NodeG> cola = new LinkedList<>();
+    
+        System.out.println("BFS desde el nodo " + start.getValue() + ":");
+        cola.add(start); 
+        visitados.add(start); 
+    
+        while (!cola.isEmpty()) {
+            NodeG actual = cola.poll();
+            System.out.print(actual.getValue() + " ");
+
+            for (NodeG neighbor : actual.getNeighbors()) {
+                if (!visitados.contains(neighbor)) {
+                    visitados.add(neighbor); 
+                    cola.add(neighbor);     
+                }
+            }
+        }
+        System.out.println(); 
+    }
+    public boolean hasPathDFS(NodeG start, NodeG end) {
+        if (start == null || end == null) return false;
+        Set<NodeG> visitados = new HashSet<>();
+        return hasPathDFSUtil(start, end, visitados);
+    }
+    
+    private boolean hasPathDFSUtil(NodeG current, NodeG end, Set<NodeG> visitados) {
+        if (current == end) return true;
+        if (visitados.contains(current)) return false;
+        
+        visitados.add(current);
+        
+        for (NodeG neighbor : current.getNeighbors()) {
+            if (hasPathDFSUtil(neighbor, end, visitados)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean hasPathBFS(NodeG start, NodeG end) {
+        if (start == null || end == null) return false;
+        
+        Set<NodeG> visitados = new HashSet<>();
+        Queue<NodeG> cola = new LinkedList<>();
+        
+        cola.add(start);
+        visitados.add(start);
+        
+        while (!cola.isEmpty()) {
+            NodeG current = cola.poll();
+            if (current == end) return true;
+            
+            for (NodeG neighbor : current.getNeighbors()) {
+                if (!visitados.contains(neighbor)) {
+                    visitados.add(neighbor);
+                    cola.add(neighbor);
+                }
+            }
+        }
+        return false;
+    }
+
+
+    
+
+    /*public void getDFS(NodeG startNode) {
         boolean[] visited = new boolean[nodes.size()];
         getDFSUtil(startNode, visited);
     }
@@ -92,4 +186,5 @@ public class Graph {
             System.out.println();
         }
     }
+        */
 }
